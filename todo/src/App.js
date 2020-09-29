@@ -2,10 +2,18 @@ import React from 'react';
 import './App.css';
 
 
-function Todo({ todo }) {
+function Todo({ todo, index, completeTodo, removeTodo }) {
     return (
-      <div className="todo">
+      <div 
+        className="todo"
+        style={{ textDecoration: todo.isCompleted ? "line-through" : "" }}
+      >
         {todo.text}
+        <div>
+          <button onClick={() => completeTodo(index)}>Complete</button>
+          <button onClick={() => removeTodo(index)}>delete</button>
+          
+        </div>
       </div>
     );
   };
@@ -30,22 +38,55 @@ function Todo({ todo }) {
         />
       </form>
     );
+
   }
 
 function App() {
   const [todos, setTodos] = React.useState([
-    { text: "Look for recording company" },
-    { text: "Go to the bank" },
-    { text: "Name for the album" },
-    { text: "Pay the company" },
-    { text: "Publish the album" },
-    { text: "Write an article in a newspapar" }
+    { 
+      text: "Look for recording company",
+        isCompleted: false
+    },
+    { 
+      text: "Go to the bank",
+        isCompleted: false
+    },
+    { 
+      text: "Name for the album",
+        isCompleted: false
+     },
+    { 
+      text: "Pay the company",
+        isCompleted: false
+     },
+    { 
+      text: "Publish the album",
+        isCompleted: false
+     },
+    { 
+      text: "Write an article in a newspapar",
+        isCompleted: false
+     }
   ]);
 
   const addTodo = text => {
     const newTodos = [...todos, { text }];
     setTodos(newTodos);
   };
+
+  const completeTodo = index => {
+    const newTodos = [...todos];
+    newTodos[index].isCompleted = true;
+    setTodos(newTodos);
+  };
+
+  const removeTodo = index => {
+    const newTodos = [...todos];
+    newTodos.splice(index, 1);
+    setTodos(newTodos);
+  };
+
+  
 
   return (
     <div className="app">
@@ -55,6 +96,8 @@ function App() {
             key={index}
             index={index}
             todo={todo}
+            completeTodo={completeTodo}
+            removeTodo={removeTodo}
           />
         ))}
         <TodoForm addTodo={addTodo} />
