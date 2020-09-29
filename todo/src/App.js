@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 
+
 function Todo({ todo }) {
     return (
       <div className="todo">
@@ -41,6 +42,11 @@ function App() {
     { text: "Write an article in a newspapar" }
   ]);
 
+  const addTodo = text => {
+    const newTodos = [...todos, { text }];
+    setTodos(newTodos);
+  };
+
   return (
     <div className="app">
       <div className="todo-list">
@@ -51,6 +57,7 @@ function App() {
             todo={todo}
           />
         ))}
+        <TodoForm addTodo={addTodo} />
       </div>
     </div>
   );
